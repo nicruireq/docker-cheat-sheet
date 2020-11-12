@@ -1,0 +1,131 @@
+
+\documentclass{article}
+\usepackage[landscape]{geometry}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{esint}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing}
+\usepackage{amsmath,amssymb}
+
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\makeatletter
+
+\newcommand*\bigcdot{\mathpalette\bigcdot@{.5}}
+\newcommand*\bigcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+\makeatother
+
+\title{Docker Cheat Sheet}
+%\usepackage[spanish,es-noshorthands]{babel}
+\usepackage[utf8]{inputenc}
+
+\advance\topmargin-.8in
+\advance\textheight3in
+\advance\textwidth3in
+\advance\oddsidemargin-1.5in
+\advance\evensidemargin-1.5in
+\parindent0pt
+\parskip2pt
+\newcommand{\hr}{\centerline{\rule{3.5in}{1pt}}}
+%\colorbox[HTML]{e4e4e4}{\makebox[\textwidth-2\fboxsep][l]{texto}
+
+\usepackage{listings}
+
+\begin{document}
+
+\begin{center}{\huge{\textbf{Docker Cheat Sheet}}}\\
+\end{center}
+\begin{multicols*}{3}
+
+\tikzstyle{mybox} = [draw=black, fill=white, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=10pt]
+\tikzstyle{fancytitle} =[fill=black, text=white, font=\bfseries]
+
+%------------ Start container ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+    \begin{minipage}{0.3\textwidth}
+    %\begin{lstlisting}
+        docker run $-dp$ port\_host:port\_container image \\ \\
+        Example: \\ docker run -dp 80:80 docker/getting-started \\
+        -d: detached mode \\
+        -p: map port of the host to port in container
+    %\end{lstlisting}
+    \end{minipage}
+};
+%------------ Start container Header ---------------------
+\node[fancytitle, right=10pt] at (box.north west) {Start container};
+\end{tikzpicture}
+
+%------------ Build image ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+    \begin{minipage}{0.3\textwidth}
+    docker build -t tag Dockerfile\_path \\ \\
+    -t: flag tags our image
+    \end{minipage}
+};
+%------------ Build image Header ---------------------
+\node[fancytitle, right=10pt] at (box.north west) {Build Image};
+\end{tikzpicture}
+
+%------------ Remove container ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+    \begin{minipage}{0.3\textwidth}
+    1. Get container ID: docker ps \\
+	2. Stop container: docker stop container\_id \\
+	3. Remove container: docker rm container\_id \\
+	Stop and remove: docker rm -f container\_id
+    \end{minipage}
+};
+%------------ Remove container Header ---------------------
+\node[fancytitle, right=10pt] at (box.north west) {Removing a container};
+\end{tikzpicture}
+
+%------------ Pushing Content ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+    \begin{minipage}{0.3\textwidth}
+    Login to Docker Hub: \\ docker login -u username \\
+    Tag your image: \\ docker tag tag\_name username/image\_name \\
+    Push your image: \\ docker push username/image\_name 
+    \end{minipage}
+};
+%------------ Pushing content Header ---------------------
+\node[fancytitle, right=10pt] at (box.north west) {Pushing an image};
+\end{tikzpicture}
+%------------ List images Content ---------------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+    \begin{minipage}{0.3\textwidth}
+    	docker image ls
+    \end{minipage}
+};
+%------------ List images Header ---------------------
+\node[fancytitle, right=10pt] at (box.north west) {List your images};
+\end{tikzpicture}
+
+%------------ ODE Content ---------------
+\begin{tikzpicture}
+\node [mybox] (box){%
+    \begin{minipage}{0.3\textwidth}
+        docker exec container-id command \\ \\
+        Example: \\
+        docker exec container-id cat /data.txt
+    \end{minipage}
+};
+%------------ ODE Header ---------------------
+\node[fancytitle, right=10pt] at (box.north west) {Execing into a container};
+\end{tikzpicture}
+
+
+
+\end{multicols*}
+\end{document}
